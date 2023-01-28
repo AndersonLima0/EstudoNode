@@ -10,7 +10,7 @@ app.get("/home", (req, res) => {
   res.status(200).send("<h1>Hello world</h1>");
 });
 
-app.get("/users", (req, res) => {
+/* app.get("/users", (req, res) => {
   const users = [
     {
       name: "Anderson",
@@ -23,7 +23,7 @@ app.get("/users", (req, res) => {
   ];
 
   res.status(200).json(users);
-});
+}); */
 
 //cria usuario no postman
 app.post("/users", async (req, res) => {
@@ -38,8 +38,19 @@ app.post("/users", async (req, res) => {
 //Listagem de usuarios
 app.get("/users", async (req, res) => {
   try {
-    const users = await UserModel.find({});
-    res.status(200).json(users);
+    const user = await UserModel.find({});
+    res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+//Listagem de usuario por id
+app.get("/users/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const user = await UserModel.findById(id);
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).send(error.message);
   }
