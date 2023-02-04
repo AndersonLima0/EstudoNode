@@ -55,6 +55,17 @@ app.get("/users/:id", async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
+//editar usuario nesse caso o campo emmail
+app.patch("/users/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 const port = 8080;
 app.listen(port, () => console.log(`Rodando com express na porta ${port}`));
