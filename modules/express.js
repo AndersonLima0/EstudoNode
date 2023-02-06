@@ -5,14 +5,21 @@ const app = express();
 
 app.use(express.json());
 
+app.set("view engine", "ejs");
+app.set("views", "src/views");
+
 //middleware são executados antes de qualquer requisição
-app.use((req, res, next) =>{
+app.use((req, res, next) => {
   console.log(`Request Type: ${req.method}`);
-  console.log(`Content Type: ${req.headers["content-type"]}`)
-  console.log(`Date: ${new Date()}`)
+  console.log(`Content Type: ${req.headers["content-type"]}`);
+  console.log(`Date: ${new Date()}`);
 
   next();
-})
+});
+
+app.get("/views/users", async (req, res) => {
+  res.render("index");
+});
 
 app.get("/home", (req, res) => {
   res.contentType("application/html");
