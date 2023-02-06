@@ -5,6 +5,15 @@ const app = express();
 
 app.use(express.json());
 
+//middleware são executados antes de qualquer requisição
+app.use((req, res, next) =>{
+  console.log(`Request Type: ${req.method}`);
+  console.log(`Content Type: ${req.headers["content-type"]}`)
+  console.log(`Date: ${new Date()}`)
+
+  next();
+})
+
 app.get("/home", (req, res) => {
   res.contentType("application/html");
   res.status(200).send("<h1>Hello world</h1>");
